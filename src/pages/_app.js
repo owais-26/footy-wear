@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 export default function App({ Component, pageProps }) {
  useEffect(() => {
-   console.log("Hey, I'm useEffect from _app.js");
+  //  console.log("Hey, I'm useEffect from _app.js");
    try {
      const savedCart = localStorage.getItem("cart");
      if (savedCart) {

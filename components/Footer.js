@@ -1,49 +1,55 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react'
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
 export const Footer = () => {
   return (
     <>
-    
       <footer className="text-gray-600 body-font">
-        
         <div className="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
-          
           <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
-            
             <Link href={"/"} legacyBehavior>
               <a className="flex title-font font-medium items-center  justify-center text-gray-900">
                 <Image src="/logofoot.png" alt="" width={100} height={100} />
-              </a
-              >
+              </a>
             </Link>
+            <p className="text-center text-white">
+              Unleash your passion, wear the spirit of football.
+            </p>
           </div>
           <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
             <div className="lg:w-1/4 md:w-1/2 w-full px-4">
               <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-                CATEGORIES
+                SHOP
               </h2>
               <nav className="list-none mb-10">
                 <li>
-                  <a className="text-gray-600 hover:text-gray-800">
-                    First Link
-                  </a>
+                  <Link href={"/footballs"} legacyBehavior>
+                    <a className="mr-5 hover:text-gray-90">
+                      Footballs
+                    </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="text-gray-600 hover:text-gray-800">
-                    Second Link
-                  </a>
+                  <Link href={"/kits"} legacyBehavior>
+                    <a className="mr-5 hover:text-gray-900">
+                      Kits
+                    </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="text-gray-600 hover:text-gray-800">
-                    Third Link
-                  </a>
+                  <Link href={"/shoes"} legacyBehavior>
+                    <a className="mr-5 hover:text-gray-900">
+                      Shoes
+                    </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="text-gray-600 hover:text-gray-800">
-                    Fourth Link
-                  </a>
+                  <Link href={"/accessories"} legacyBehavior>
+                    <a className="mr-5 hover:text-gray-900">
+                      Accessories
+                    </a>
+                  </Link>
                 </li>
               </nav>
             </div>
@@ -76,7 +82,7 @@ export const Footer = () => {
             </div>
             <div className="lg:w-1/4 md:w-1/2 w-full px-4">
               <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-                CATEGORIES
+                POLICY
               </h2>
               <nav className="list-none mb-10">
                 <li>
@@ -103,7 +109,7 @@ export const Footer = () => {
             </div>
             <div className="lg:w-1/4 md:w-1/2 w-full px-4">
               <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-                CATEGORIES
+                ABOUT
               </h2>
               <nav className="list-none mb-10">
                 <li>
@@ -133,15 +139,7 @@ export const Footer = () => {
         <div>
           <div className="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
             <p className="text-gray-500 text-sm text-center sm:text-left">
-              © 2020 Tailblocks —
-              <a
-                href="https://twitter.com/knyttneve"
-                rel="noopener noreferrer"
-                className="text-gray-600 ml-1"
-                target="_blank"
-              >
-                @knyttneve
-              </a>
+              © FootyWear | All Rights Reserved
             </p>
             <span className="inline-flex sm:ml-auto sm:mt-0 mt-2 justify-center sm:justify-start">
               <a className="text-gray-500">
@@ -203,7 +201,6 @@ export const Footer = () => {
           </div>
         </div>
       </footer>
-      
     </>
   );
-}
+};

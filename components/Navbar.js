@@ -4,8 +4,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { BsCart4, BsFileMinusFill, BsPlusCircle } from "react-icons/bs";
 import { MdOutlineAccountCircle } from "react-icons/md";
 
-import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
+import { FaCircle, FaDotCircle, FaMinusCircle, FaPlusCircle } from "react-icons/fa";
 import {
+  AiFillCiCircle,
   AiFillPlusCircle,
   AiOutlineClose,
   AiOutlineDelete,
@@ -15,7 +16,7 @@ import {
 } from "react-icons/ai";
  
 const Navbar = ({ cart, addToCart, removeFromCart, total, clearCart }) => {
-    console.log(cart, addToCart, removeFromCart, total, clearCart);
+    // console.log(cart, addToCart, removeFromCart, total, clearCart);
   const [Side, setSide] = useState(false);
   const togglerRef = useRef();
   useEffect(() => {
@@ -68,9 +69,9 @@ const Navbar = ({ cart, addToCart, removeFromCart, total, clearCart }) => {
                 Shoes
               </a>
             </Link>
-            <Link href={"/hoodies"} legacyBehavior>
+            <Link href={"/accessories"} legacyBehavior>
               <a className="mr-5 hover:text-gray-900 text-lg  font-bold">
-                Hoodies
+                Accessories
               </a>
             </Link>
           </nav>
@@ -161,19 +162,14 @@ const Navbar = ({ cart, addToCart, removeFromCart, total, clearCart }) => {
                                   {Object.keys(cart).map((k) => {
                                     return (
                                       <li className="flex py-6" key={k}>
-                                        <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                          <img
-                                            src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg"
-                                            alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt."
-                                            className="h-full w-full object-cover object-center"
-                                          />
-                                        </div>
-
+                                        <FaDotCircle className="text-orange-600 mt-1" />
                                         <div className="ml-4 flex flex-1 flex-col">
                                           <div>
                                             <div className="flex justify-between text-base font-medium text-gray-900">
                                               <span className="text-orange-600">
-                                                {cart[k].name}
+                                                {cart[k].name} &#40;
+                                                {cart[k].variant}/{cart[k].size}
+                                                &#41;
                                               </span>
                                             </div>
                                           </div>
@@ -230,7 +226,7 @@ const Navbar = ({ cart, addToCart, removeFromCart, total, clearCart }) => {
                           <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                             <div className="flex mb-5 justify-between text-base font-medium text-gray-900">
                               <p>Subtotal</p>
-                              <p>$ {total}</p>
+                              <p>PKR {total}</p>
                             </div>
                             <p className="mt-0.5 mb-3 text-sm text-gray-500">
                               Shipping and taxes calculated at checkout.

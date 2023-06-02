@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 
-const Hoodies = () => {
+const Accessories = () => {
     return (
       <>
         <>
@@ -36,4 +36,4 @@ const Hoodies = () => {
     );
 }
 
-export default Hoodies;
+export default Accessories;

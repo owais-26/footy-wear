@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+
 import React, { useState, useEffect, useRef } from "react";
 import { BsCart4, BsCash, BsFileMinusFill, BsPlusCircle } from "react-icons/bs";
 
-import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
+import {FaDotCircle, FaMinusCircle, FaPlusCircle } from "react-icons/fa";
 import {
   AiFillPlusCircle,
   AiOutlineClose,
@@ -168,7 +169,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, total, clearCart }) => {
                     className="text-lg font-medium shop "
                     id="slide-over-title"
                   >
-                    Shopping cart
+                    Review Cart Items & Pay
                   </h2>
                   <div className="ml-3 flex h-7 items-center"></div>
                 </div>
@@ -184,19 +185,14 @@ const Checkout = ({ cart, addToCart, removeFromCart, total, clearCart }) => {
                       {Object.keys(cart).map((k) => {
                         return (
                           <li className="flex py-6" key={k}>
-                            <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                              <img
-                                src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg"
-                                alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt."
-                                className="h-full w-full object-cover object-center"
-                              />
-                            </div>
-
+                            <FaDotCircle className="text-orange-600 mt-1" />  
                             <div className="ml-4 flex flex-1 flex-col">
                               <div>
                                 <div className="flex justify-between text-base font-medium text-gray-900">
                                   <span className="text-orange-600">
-                                    {cart[k].name}
+                                    {cart[k].name} &#40;
+                                    {cart[k].variant}/{cart[k].size}
+                                    &#41;
                                   </span>
                                 </div>
                               </div>
@@ -253,7 +249,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, total, clearCart }) => {
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                 <div className="flex mb-5 justify-between text-base font-semibold text-gray-900">
                   <p>Subtotal</p>
-                  <p>$ {total}</p>
+                  <p>PKR {total}</p>
                 </div>
                 <p className="mt-0.5 mb-3 text-sm text-gray-500">
                   Shipping and taxes calculated at checkout.
