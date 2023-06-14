@@ -21,17 +21,21 @@ h1,h2,h3,h4,h5,h6{
     color: whitesmoke !important;
 }
 a,span,p{
-    color:rgba(255, 140, 0, 1) !important;
+    color: #FF7417 !important;
 }
 .shop{
-      color:rgba(255, 140, 0, 1) !important
+      color: #FF7417 !important
 }
 .color{
 
-color:rgba(255, 140, 0, 1) !important;
+color: #FF7417 !important;
 }
 .cartCheckout{
 background-color: rgb(243, 239, 236);
 border-radius: 20px;
 overflow: hidden;
+}
+.dropdown{
+  right: 5.25rem;
+
 }

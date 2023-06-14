@@ -3,24 +3,49 @@ import { BsCartPlus } from "react-icons/bs";
 import { useState } from "react";
 import mongoose from "mongoose";
 import Product from "../../../models/Product";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Post = ({ clearCart, addToCart, product, variants }) => {
   console.log(product, variants);
   const router = useRouter();
   const [service, setService] = useState();
   const [pin, setPins] = useState();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const { slug } = router.query;
   const checkService = async () => {
     const pins = await fetch("http://localhost:3000/api/pincode");
     let pinJson = await pins.json();
     if (pinJson.includes(parseInt(pin))) {
       setService(true);
+      toast.success("Your Pincode is servicable!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } else {
       setService(false);
+      toast.error("Sorry! Pincode not servicable!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
   const onChangePin = (e) => {
-    setPins(e.target.value);
+     const value = event.target.value;
+     setPins(value);
+     setIsButtonDisabled(value.length === 0);
   };
   const [color, setColor] = useState(product.color);
   const [Size, setSize] = useState(product.size);
@@ -40,37 +65,61 @@ const Post = ({ clearCart, addToCart, product, variants }) => {
      product.img
    );
    router.push(`/checkout`)
+    
 
   }
+  const cartNotify = () =>
+    toast.success("Item added to cart!", {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });;
+  
 
   return (
     <>
-      This is: {slug}
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+
       <section className="text-gray-600 body-font overflow-hidden">
         <div className="container px-5 py-24 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img
               alt="ecommerce"
-              className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-top rounded"
+              className="lg:w-1/2 w-full h-auto max-w-max md:h-auto lg:h-auto h-64 object-cover object-center rounded"
               src={product.img}
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
                 FOOTY WEAR
               </h2>
+
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
                 {product.title} {product.color}/{product.size}
               </h1>
-            
-              <p className="leading-relaxed">
-                {product.desc}
-              </p>
+
+              <p className="leading-relaxed">{product.desc}</p>
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                 <div className="flex  items-center">
                   <span className="mr-3">Size</span>
                   <div className="relative">
                     <select
-                    value={Size}
+                      value={Size}
                       onChange={(e) => {
                         refreshVariant(e.target.value, color);
                       }}
@@ -107,17 +156,29 @@ const Post = ({ clearCart, addToCart, product, variants }) => {
               </div>
               <div className="flex">
                 <span className="title-font font-medium text-2xl text-gray-900">
-                PKR {product.price}
+                  PKR {product.price}
                 </span>
 
-                <button onClick={()=>{
-                  buyNow()
-                }} className="flex ml-auto text-white bg-orange-500 border-0 py-2 px-3 focus:outline-none hover:bg-orange-600 rounded">
+                <button
+                  onClick={() => {
+                    buyNow();
+                  }}
+                  className="flex ml-auto text-white bg-orange-500 border-0 py-2 px-3 focus:outline-none hover:bg-orange-600 rounded"
+                >
                   Buy Now <BsCartPlus className="text-xl mt-0.5 ms-1" />
                 </button>
                 <button
                   onClick={() => {
-                    addToCart(slug, 1, product.price, product.title, product.size, product.color, product.img);
+                    cartNotify();
+                    addToCart(
+                      slug,
+                      1,
+                      product.price,
+                      product.title,
+                      product.size,
+                      product.color,
+                      product.img
+                    );
                   }}
                   className="flex ml-auto text-white bg-orange-500 border-0 py-2 px-3 focus:outline-none hover:bg-orange-600 rounded"
                 >
@@ -138,21 +199,14 @@ const Post = ({ clearCart, addToCart, product, variants }) => {
                   />
                   <button
                     type="button"
-                    onClick={checkService}
-                    class="btn mt-4 p-2 px-3 font-bold border border-2 border-blue-800 rounded-lg bg-orange-600"
+                    onClick={() => {
+                      checkService();
+                    }}
+                    disabled={isButtonDisabled}
+                    class="btn text-white hover:bg-orange-600 mt-4 p-2 px-3 border border-2 border-blue-800 rounded-lg bg-orange-500"
                   >
                     Check
                   </button>
-                  {service && service != null && (
-                    <div className="text-green-500 mt-3">
-                      Yay! You&apos;re in our reach!
-                    </div>
-                  )}
-                  {!service && service != null && (
-                    <div className="color">
-                      Sorry! We cannot deliver to this PinCode.
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
@@ -169,7 +223,10 @@ export async function getServerSideProps(context) {
     await mongoose.connect(process.env.MONGO_URI);
   }
   let product = await Product.findOne({ slug: context.query.slug });
-  let variants = await Product.find({ title: product.title });
+  let variants = await Product.find({
+    title: product.title,
+    category: product.category,
+  });
   let colorSizeSlug = {};
   for (let item of variants) {
     if (Object.keys(colorSizeSlug).includes(item.color)) {

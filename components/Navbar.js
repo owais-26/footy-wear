@@ -2,9 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
 import { BsCart4, BsFileMinusFill, BsPlusCircle } from "react-icons/bs";
-import { MdOutlineAccountCircle } from "react-icons/md";
+import { MdLogin, MdOutlineAccountCircle } from "react-icons/md";
 
-import { FaCircle, FaDotCircle, FaMinusCircle, FaPlusCircle } from "react-icons/fa";
+import {
+  FaCircle,
+  FaDotCircle,
+  FaMinusCircle,
+  FaPlusCircle,
+} from "react-icons/fa";
 import {
   AiFillCiCircle,
   AiFillPlusCircle,
@@ -14,11 +19,21 @@ import {
   AiOutlineShoppingCart,
   IconName,
 } from "react-icons/ai";
- 
-const Navbar = ({ cart, addToCart, removeFromCart, total, clearCart }) => {
-    // console.log(cart, addToCart, removeFromCart, total, clearCart);
+
+const Navbar = ({
+  logout,
+  user,
+  cart,
+  addToCart,
+  removeFromCart,
+  total,
+  clearCart,
+}) => {
+  // console.log(cart, addToCart, removeFromCart, total, clearCart);
   const [Side, setSide] = useState(false);
   const togglerRef = useRef();
+  const [dropdown, setDropdown] = useState(false);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -36,7 +51,7 @@ const Navbar = ({ cart, addToCart, removeFromCart, total, clearCart }) => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, [togglerRef, Side]);
-  
+
   return (
     <>
       <header className="text-gray-600 body-font">
@@ -55,12 +70,12 @@ const Navbar = ({ cart, addToCart, removeFromCart, total, clearCart }) => {
 
           <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
             <Link href={"/footballs"} legacyBehavior>
-              <a className="mr-5 hover:text-gray-900 text-lg font-bold">
+              <a className="mr-5 hover:text-gray-900 orange text-lg font-bold">
                 Footballs
               </a>
             </Link>
             <Link href={"/kits"} legacyBehavior>
-              <a className="mr-5 hover:text-gray-900 text-lg  font-bold">
+              <a className="mr-5 hover:text-gray-900 text-lg orange font-bold">
                 Kits
               </a>
             </Link>
@@ -75,14 +90,94 @@ const Navbar = ({ cart, addToCart, removeFromCart, total, clearCart }) => {
               </a>
             </Link>
           </nav>
-          <Link href={"/login"}>
-            <button
-              ref={togglerRef}
-              className="inline-flex mb-0.5 items-center border-2 border-black bg-gray-100 border-0 py-1 px-3  focus:outline-none hover:bg-orange-200  text-base mt-4 md:mt-0"
-            >
-              <MdOutlineAccountCircle className="text-2xl text-black" />
-            </button>
-          </Link>
+
+          <div>
+            {user.value && (
+              <button
+                onClick={() => {
+                  setDropdown(true);
+                  console.log(dropdown);
+                }}
+                data-dropdown-toggle="dropdown"
+                ref={togglerRef}
+                className="inline-flex mb-0.5 items-center border-2 border-black bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-orange-200 text-base mt-4 md:mt-0"
+              >
+                <MdOutlineAccountCircle className="text-2xl text-black" />
+                <svg
+                  className="w-4 h-4 ml-2 text-black"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </button>
+            )}
+            <div>
+              {dropdown && (
+                <div
+                  id="dropdown"
+                  className="z-10 bg-white divide-y absolute dropdown divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+                  onMouseOver={() => {
+                    setDropdown(true);
+                  }}
+                  onMouseLeave={() => {
+                    setDropdown(false);
+                  }}
+                >
+                  <ul
+                    className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                    aria-labelledby="dropdownDefaultButton"
+                  >
+                    <li>
+                      <a
+                        href="/myaccount"
+                        className="block px-4 py-2 font-bold hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        My Account
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="/orders"
+                        className="block px-4 py-2 font-bold hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        My Orders
+                      </a>
+                    </li>
+                    <li>
+                      <Link
+                        onClick={logout}
+                        href="/"
+                        className="block px-4 py-2 font-bold hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        Logout
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+          {user.value == null && (
+            <Link href={"/login"}>
+              <button
+                id="dropdownDefaultButton"
+                data-dropdown-toggle="dropdown"
+                className=" inline-flex border-2 border-black items-center mb-0.5  bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-orange-200  text-base mt-4 md:mt-0"
+                type="button"
+              >
+                <MdLogin className="text-2xl  text-black" />
+              </button>
+            </Link>
+          )}
 
           <button
             ref={togglerRef}

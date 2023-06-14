@@ -1,11 +1,28 @@
 import "@/styles/globals.css";
 import { Footer } from "../../components/Footer";
 import Navbar from "../../components/Navbar";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
+import LoadingBar from "react-top-loading-bar";
+
+
+
 
 export default function App({ Component, pageProps }) {
+  const [cart, setCart] = useState({});
+  const [total, setTotal] = useState(0);
+  const [user, setUser] = useState({value: null})
+  const [key, setKey] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const router= useRouter()
  useEffect(() => {
   //  console.log("Hey, I'm useEffect from _app.js");
+  router.events.on('routeChangeStart', ()=>{
+    setProgress(40)
+  })
+  router.events.on('routeChangeComplete', ()=>{
+    setProgress(100)
+  })
    try {
      const savedCart = localStorage.getItem("cart");
      if (savedCart) {
@@ -16,12 +33,20 @@ export default function App({ Component, pageProps }) {
      console.error(error);
      localStorage.clear();
    }
-   
- }, []);
+   const token = localStorage.getItem('token')
+   if(token){
+    setUser({value : token})
+    setKey(Math.random())
+   }
+ }, [router.query]);
 
- const [cart, setCart] = useState({});
- const [total, setTotal] = useState(0);
-
+ 
+const logout = ()=>{
+  localStorage.removeItem("token")
+  setUser({value: null})
+  setKey(Math.random())
+ 
+}
  const saveCart = (myCart) => {
    localStorage.setItem("cart", JSON.stringify(myCart));
    let subt = 0;
@@ -65,10 +90,20 @@ export default function App({ Component, pageProps }) {
    saveCart({});
     event.stopPropagation();
  };
-
+ 
+const ref = useRef(null);
   return (
     <>
+      <LoadingBar
+        color="#F94616"
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+        waitingTime={400}
+      />
       <Navbar
+        logout={logout}
+        key={key}
+        user={user}
         cart={cart}
         addToCart={addToCart}
         removeFromCart={removeFromCart}

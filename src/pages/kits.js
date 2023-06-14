@@ -11,7 +11,7 @@ const kits = ({ products }) => {
     <>
       <section className="text-gray-600 body-font content-center">
         <div className="container px-5 py-24 mx-auto ">
-          <div className="flex flex-wrap -m-4">
+          <div className="flex flex-wrap -m-4 justify-center">
             {Object.keys(products).map((item) => {
               return (
                 <Link
@@ -19,13 +19,20 @@ const kits = ({ products }) => {
                   key={products[item]._id}
                   href={`/product/${products[item].slug}`}
                 >
-                  <div className="lg:w-1/3 md:w-1/2  w-full cursor-pointer shadow-lg m-auto">
+                  <div
+                    style={{
+                      width: "300px",
+                      height: "500px",
+                    }}
+                    className=" w-full cursor-pointer shadow-lg mx-auto lg:mx-10"
+                  >
                     <div className="block relative rounded overflow-hidden">
                       <img
-                        width={400}
-                        height={250}
+                        style={{
+                          width: "300px",
+                          height: "300px",
+                        }}
                         alt="ecommerce"
-                        className="w-full h-full block"
                         src={products[item].img}
                       />
                     </div>
@@ -40,15 +47,29 @@ const kits = ({ products }) => {
                       <p className="mt-1">Available Sizes</p>
                       <div className="mt-1">
                         {products[item].size.includes("S") && (
-                          <span className="border-2 me-1 border-orange-700 px-1">S</span>
+                          <span className="border-2 me-1 border-orange-700 px-1">
+                            S
+                          </span>
                         )}
                         {products[item].size.includes("M") && (
-                          <span className="border-2 me-1 border-orange-700 px-1">M</span>
+                          <span className="border-2 me-1 border-orange-700 px-1">
+                            M
+                          </span>
                         )}
-                        {products[item].size.includes("L") && <span className="border-2 me-1 border-orange-700 px-1">L</span>}
-                        {products[item].size.includes("XL") && <span className="border-2 me-1 border-orange-700 px-1">XL</span>}
+                        {products[item].size.includes("L") && (
+                          <span className="border-2 me-1 border-orange-700 px-1">
+                            L
+                          </span>
+                        )}
+                        {products[item].size.includes("XL") && (
+                          <span className="border-2 me-1 border-orange-700 px-1">
+                            XL
+                          </span>
+                        )}
                         {products[item].size.includes("XLL") && (
-                          <span className="border-2 me-1 border-orange-700 px-1">XLL</span>
+                          <span className="border-2 me-1 border-orange-700 px-1">
+                            XLL
+                          </span>
                         )}
                       </div>
                     </div>
