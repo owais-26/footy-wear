@@ -1,7 +1,15 @@
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect} from "react";
 
-const forgot = () => {
+
+const Forgot = () => {
+  const router = useRouter()
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      router.push("/");
+    }
+  }, []);
   return (
     <>
       <div className="flex min-h-full flex-col justify-center px-6 py-6 lg:px-8">
@@ -63,4 +71,4 @@ const forgot = () => {
   );
 };
 
-export default forgot;
+export default Forgot;

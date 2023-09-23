@@ -1,15 +1,22 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
+
   const router = useRouter()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  useEffect(() => {
+    if(localStorage.getItem('token')){
+      router.push('/')
+    }
+    
+  }, []);
   const handleChange = (e) => {
     if (e.target.name === "email") {
       setEmail(e.target.value);
@@ -18,52 +25,39 @@ const Login = () => {
     }
   };
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const data = { email, password };
-    let res = await fetch("http://localhost:3000/api/login", {
-      method: "POST", // or 'PUT'
+  e.preventDefault();
+
+  const data = {
+    firstName: "a",
+    lastName: "a",
+    email: "a",
+    number: "a",
+    subject: "a",
+    inquiry: "a",
+  };
+
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/contact`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
 
-    let response = await res.json();
+    const response = await res.json();
     console.log(response);
 
-    setEmail("");
-    setPassword("");
-    if(response.success){
-      localStorage.setItem("token",response.token)
-       toast.success("Login Successfully! ", {
-         position: "bottom-left",
-         autoClose: 5000,
-         hideProgressBar: false,
-         closeOnClick: true,
-         pauseOnHover: true,
-         draggable: true,
-         progress: undefined,
-         theme: "light",
-       });
-       setTimeout(() => {
-          router.push("http://localhost:3000");
-       }, 1500);
+    if (response.success) {
+      console.log("Data added successfully:", response.message);
+    } else {
+      console.log("Failed to add data:", response.message);
     }
-   
-    else{
-       toast.error("Invalid Credentials! ", {
-         position: "bottom-left",
-         autoClose: 5000,
-         hideProgressBar: false,
-         closeOnClick: true,
-         pauseOnHover: true,
-         draggable: true,
-         progress: undefined,
-         theme: "light",
-       });
-      
-    }
-   };
+  } catch (error) {
+    console.error("Error sending POST request:", error);
+  }
+};
+
     return (
       <>
         <ToastContainer

@@ -137,20 +137,26 @@ const Navbar = ({
                     aria-labelledby="dropdownDefaultButton"
                   >
                     <li>
-                      <a
-                        href="/myaccount"
+                      <Link
+                        legacyBehavior
+                        href={"/myaccount"}
                         className="block px-4 py-2 font-bold hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
-                        My Account
-                      </a>
+                        <a className="block px-4 py-2 font-bold hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                          My Account
+                        </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
-                        href="/orders"
+                      <Link
+                        legacyBehavior
+                        href={"/orders"}
                         className="block px-4 py-2 font-bold hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
-                        My Orders
-                      </a>
+                        <a className="block px-4 py-2 font-bold hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                          My Orders
+                        </a>
+                      </Link>
                     </li>
                     <li>
                       <Link

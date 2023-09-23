@@ -14,7 +14,7 @@ const Post = ({ clearCart, addToCart, product, variants }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const { slug } = router.query;
   const checkService = async () => {
-    const pins = await fetch("http://localhost:3000/api/pincode");
+    const pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/login`);
     let pinJson = await pins.json();
     if (pinJson.includes(parseInt(pin))) {
       setService(true);
